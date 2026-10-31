@@ -1,21 +1,34 @@
-# Redator AI: ENEM Essay Correction
+# Redator AI — Intelligent ENEM Essay Correction Platform
 
-This system is a web application for the automated correction of ENEM 2024 essays, using modern technologies for image processing, text analysis, and user authentication. It allows users to upload essay images, which are then processed and evaluated based on the official ENEM scoring criteria.
+> **About this repository:** : This public repository contains the MVP and proof of concept. The production version is maintained privately to protect intellectual property.
 
-## Technologies Used
+## Overview
 
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python\&logoColor=white\&style=for-the-badge)
-![LangChain](https://img.shields.io/badge/LangChain-%23000000.svg?style=for-the-badge\&logo=langchain\&logoColor=white)
-![Gemini](https://img.shields.io/badge/google%20gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white)
-![Tesseract OCR](https://img.shields.io/badge/Tesseract_OCR-4B8BBE?style=for-the-badge\&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi\&logoColor=white\&style=for-the-badge)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white&style=for-the-badge)  
-![ReactJS](https://img.shields.io/badge/React-20232A?logo=react\&logoColor=61DAFB\&style=for-the-badge)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white&style=for-the-badge)
-![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white&style=for-the-badge)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white&style=for-the-badge)
+**Redator AI** is a SaaS platform that uses artificial intelligence to evaluate ENEM essays, provide personalized feedback, and track student progress.
 
-## 📸 Application Screenshots
+It combines handwritten text recognition, evaluation based on the five official ENEM competencies, and performance analytics to make exam preparation more accessible and effective.
+
+## The Problem
+
+ENEM 2025 recorded **4.8 million registrations**, with approximately **3.5 million participants on the first day**, when the essay is administered. However, students face several preparation challenges:
+
+- **Expensive and time-consuming corrections:** Limit frequent practice and continuous learning.
+- **Lack of progress tracking:** Without organized history, students struggle to identify weaknesses and measure improvement.
+- **Increasing competition:** Courses such as Medicine, Computer Science, Artificial Intelligence, and Law demand competitive scores. Essay performance can be a significant differentiator in admissions.
+
+Essay writing also offers a concrete opportunity to improve admission scores: in 2025, only approximately **5.4% of essays scoring above zero achieved 900 points or more**, and only 10 participants received a perfect score of 1,000.
+
+## The Solution
+
+Redator AI provides an integrated environment for essay practice, correction, and performance tracking:
+
+- **Automated correction:** Students upload photos of handwritten essays and receive feedback quickly.
+- **Competency-based evaluation:** Scores from 0 to 200 for each of the five competencies, accompanied by comments and improvement suggestions.
+- **History and charts:** Records of previous essays and visualizations of score progression over time.
+- **Targeted learning:** Identification of strengths and weaknesses to guide study efforts.
+
+## Application Screenshots
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/751fd9f0-1a40-4cc8-8166-699ded9a3763" alt="Home Dashboard">
 </p>
@@ -26,160 +39,70 @@ This system is a web application for the automated correction of ENEM 2024 essay
   <img src="https://github.com/user-attachments/assets/6b40011f-0ccf-40da-acbf-d1604b1e029a" alt="Login Screen">
 </p>
 
-
-
-
 ## System Overview
 
 ![System Diagram](https://github.com/brenimcode/enem-redacao-ai/blob/main/fluxo2.png)
 
-The pipeline consists of:
+The processing pipeline consists of:
 
-1. **Image Upload:** Students upload a photo of their essay via the ReactJS frontend.
-2. **Preprocessing & OCR:** FastAPI backend preprocesses the image (deskew, denoise, threshold) and extracts text using Tesseract OCR.
-3. **Text Evaluation:** Extracted text is fed into a LangChain pipeline that uses Gemini to assess grammar, coherence, and structure.
-4. **Feedback Generation:** Gemini returns structured feedback including scores, comments, and improvement tips.
-5. **Response Delivery:** FastAPI sends the formatted results back to the ReactJS interface for display.
+1. **Image Upload:** Students upload an essay image through the React frontend.
+2. **Preprocessing and OCR:** The FastAPI backend preprocesses the image and extracts text using Tesseract OCR.
+3. **Text Evaluation:** The extracted text is analyzed by a LangChain pipeline using Gemini and the official ENEM criteria.
+4. **Feedback Generation:** The model returns structured feedback, including competency scores, comments, and improvement suggestions.
+5. **Results and History:** The frontend displays the correction and allows students to review their performance over time.
 
-This architecture ensures **robust OCR**, **context-aware analysis**, and **scalable performance** through containerization.
+This architecture combines image processing and language-model analysis to deliver structured, accessible essay feedback.
 
+## Technologies Used
+
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=for-the-badge)
+![LangChain](https://img.shields.io/badge/LangChain-%23000000.svg?style=for-the-badge&logo=langchain&logoColor=white)
+![Gemini](https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=google-gemini&logoColor=white)
+![Tesseract OCR](https://img.shields.io/badge/Tesseract_OCR-4B8BBE?style=for-the-badge)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white&style=for-the-badge)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white&style=for-the-badge)
+![ReactJS](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB&style=for-the-badge)
 
 ## Core Features
 
-#### 1. **User Authentication and Registration**
+### 1. User Authentication
+- User registration and login.
+- Bearer-token authentication using JWT.
+- Password hashing with bcrypt.
+- PostgreSQL-backed user data.
+- Request and data validation with Pydantic.
 
-* The system provides user login and registration, using **Bearer Token authentication**.
-* User credentials are stored in a **PostgreSQL** database, with passwords securely hashed using **bcrypt**.
-* Authentication is managed with **FastAPI OAuth2**, and access tokens are generated via **JSON Web Tokens (JWT)**.
-* **Pydantic** is used for data validation and type enforcement.
+### 2. Essay Submission
+- Upload essays in JPG or PNG format.
+- File type and size validation (maximum 5 MB).
+- Image validation using Pillow.
 
+### 3. Optical Character Recognition (OCR)
+- Text extraction from handwritten essay images using Tesseract OCR.
+- Portuguese language support.
+- Image preprocessing with OpenCV, including grayscale conversion and thresholding.
 
-#### 2. **Essay Submission and Processing**
+### 4. AI-Powered Essay Evaluation
+- Essay analysis using Gemini through LangChain.
+- Evaluation based on the five official ENEM competencies.
+- Structured JSON output containing:
+  - Individual competency scores.
+  - Total score.
+  - General feedback and improvement suggestions.
 
-* Users can upload essay images in **JPG** or **PNG** formats.
-* The system validates both file type and size (maximum of 5MB).
-* Image validation is performed using **Pillow**, ensuring only valid files are processed.
+### 5. Performance Tracking
+- Access to previous essay corrections.
+- Historical competency and total scores.
+- Charts to visualize progress over time and identify areas for improvement.
 
+### 6. Request Rate Limiting
 
-#### 3. **Optical Character Recognition (OCR)**
+To prevent abuse, the system limits requests per user using SlowAPI:
+- 5 requests per minute.
+- 100 requests per hour.
+- 500 requests per day.
 
-* Uploaded images are processed to extract text using **Tesseract OCR**, with support for the Portuguese language.
-* Image pre-processing is handled with **OpenCV**, applying techniques such as grayscale conversion and thresholding to improve OCR accuracy.
-
-
-#### 4. **Text Analysis via LLM**
-
-* Extracted text is analyzed by a **Google Generative AI (Gemini 2.0)** language model, integrated via **LangChain**.
-* The model evaluates the essay according to the official ENEM criteria and returns a JSON containing:
-
-  * General feedback on the essay.
-  * Individual scores for the five ENEM competencies.
-  * **Total Score**: the sum of all competency scores.
-* **Prompt engineering techniques** are applied to improve the model’s accuracy and response consistency.
-
-#### 5. **Request Rate Limiting**
-
-* To prevent abuse, the system enforces request limits per user via **SlowAPI**:
-
-  * Maximum of 5 requests per minute.
-  * Maximum of 100 requests per hour.
-  * Maximum of 500 requests per day.
-
-#### 6. **Correction Results Interface**
-
-* The system displays essay correction results in a user-friendly interface, showing:
-
-  * Individual scores for each competency.
-  * Automatically calculated total score.
-  * General comments about the essay.
-
-## Requirements
-
-- **Python** ≥ 3.11  
-- **Node.js** ≥ 18  
-- **PostgreSQL** ≥ 14  
-- **Tesseract OCR** ≥ 5.0  
-
----
-
-## Installing Dependencies
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/brenimcode/enem-redacao-ai
-cd enem-redacao-ai
-````
-
----
-
-## 2. Backend Setup
-
-### 2.1 Create and Activate a Virtual Environment
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-### 2.2 Install Python Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2.3 Configure the `.env` File
-
-Create a `.env` file inside the `back-end` folder with the following content:
-
-```env
-DATABASE_URL=postgresql://user:password@localhost:5432/database_name
-JWT_SECRET_KEY=your_secret_key
-```
-
-> **Note:** Replace the values above with your actual environment details.
-
-### 2.4 Initialize the Database
-
-Make sure PostgreSQL is running and execute the database script to create the tables:
-
-```bash
-python create_tables.py
-```
-
----
-
-## 3. Frontend Setup
-
-### 3.1 Install Node.js Dependencies
-
-```bash
-cd frontend
-npm install
-```
-
-### 3.2 Start the Frontend Development Server
-
-```bash
-npm run dev
-```
-
----
-
-## 4. Running the Backend
-
-Start the FastAPI server:
-
-```bash
-uvicorn main:app --reload
-```
-
----
-
-## System Endpoints
-
-* **Backend**: [http://localhost:8000](http://localhost:8000)
-* **Frontend**: [http://localhost:5173](http://localhost:8080)
-
-
-
+### 7. Correction Results Interface
+- Clear presentation of individual competency scores.
+- Automatically calculated total score.
+- General comments and actionable feedback.
